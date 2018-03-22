@@ -18,18 +18,18 @@ Requirements
   7. Change the file name of the token to: '<PROJECT_NAME>-<SERVICE_ACCCOUNT_NAME>.json'.  Eg: myproject-gcp-config.json
   8. Move the Service Account file to <GIT_ROOT>/deployment/gcp/tokens/
 4. Install Google Cloud SDK https://cloud.google.com/sdk/
-5. Install kubectl through gcloud:  '''gcloud components install kubectl'''
+5. Install kubectl through gcloud:  ```gcloud components install kubectl```
 6. Authorize gcloud cli, you will need the token and the Service Account ID (you can see at GCP > IAM > Service Accounts )
-   ''' gcloud auth activate-service-account <SERVICE_ACCOUNT_ID> --key-file=deployment/gcp/tokens/<TOKEN_FILE>'''
+   ``` gcloud auth activate-service-account <SERVICE_ACCOUNT_ID> --key-file=deployment/gcp/tokens/<TOKEN_FILE>```
 7. Configure default project.  use the project id generted at # 2
-   ''' gcloud config set project [PROJECT_ID] '''
+   ``` gcloud config set project [PROJECT_ID] ```
 8. Configure compute zone.  Eg.: us-central1-a	
-   ''' gcloud config set compute/zone [COMPUTE_ZONE] '''
+   ``` gcloud config set compute/zone [COMPUTE_ZONE] ```
 
 
 ### Kubernetes Engine cluster
 To create a cluster, run the following command and wait...:
-''' gcloud container clusters create [CLUSTER_NAME] '''
+``` gcloud container clusters create [CLUSTER_NAME] ```
 
 ### Deploy Kubernetes
 To deploy an application into kubernetes you can use Declarative Management using configuration files.
@@ -38,7 +38,7 @@ more: https://kubernetes.io/docs/concepts/overview/object-management-kubectl/dec
 You can find a sample deployment config at [a relative link](deployment/gcp/kubernetes_configs/sample-apache-web.yml)
 
 to deploy the sample web run the following command:
-'''kubectl apply -f deployment/gcp/kubernetes_configs/sample-apache-web.yml'''
+```kubectl apply -f deployment/gcp/kubernetes_configs/sample-apache-web.yml```
 
 
 ### External HTTP access
@@ -47,7 +47,7 @@ Configure Ingress controller to allow external request to reach internal service
 #### Static IP Address
 Create a static IP address compatible with Ingress with the name set to 'ip-web-main'.
 run the following command:
-''' gcloud compute addresses create ip-web-main --ip-version=IPV4 --global '''
+``` gcloud compute addresses create ip-web-main --ip-version=IPV4 --global ```
 
 #### Ingress controller
 Ingress can provide load balancing, SSL termination and name-based virtual hosting.
@@ -60,7 +60,7 @@ More advanced topics:
 * Load Balancing: https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer
 
 Declarative config file sample that redirects http://STATIC_IP/ to the sample frontend application
-'''
+```
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -72,10 +72,10 @@ spec:
   backend:
     serviceName: frontend-sample
     servicePort: 80
-'''
+```
 
 to deploy Ingress run the following command:
-'''kubectl apply -f CONFIG_FILE.yml'''
+```kubectl apply -f CONFIG_FILE.yml```
 
 
 
