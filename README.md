@@ -18,7 +18,8 @@ Requirements
   7. Change the file name of the token to: '<PROJECT_NAME>-<SERVICE_ACCCOUNT_NAME>.json'.  Eg: myproject-gcp-config.json
   8. Move the Service Account file to <GIT_ROOT>/deployment/gcp/tokens/
 4. Install Google Cloud SDK https://cloud.google.com/sdk/
-5. Install kubectl through gcloud:  ```gcloud components install kubectl```
+5. Install kubectl through gcloud:  
+   ```gcloud components install kubectl```
 6. Authorize gcloud cli, you will need the token and the Service Account ID (you can see at GCP > IAM > Service Accounts )
    ``` gcloud auth activate-service-account <SERVICE_ACCOUNT_ID> --key-file=deployment/gcp/tokens/<TOKEN_FILE>```
 7. Configure default project.  use the project id generted at # 2
@@ -35,7 +36,7 @@ To create a cluster, run the following command and wait...:
 To deploy an application into kubernetes you can use Declarative Management using configuration files.
 more: https://kubernetes.io/docs/concepts/overview/object-management-kubectl/declarative-config/
 
-You can find a sample deployment config at [a relative link](deployment/gcp/kubernetes_configs/sample-apache-web.yml)
+You can find a sample deployment config [here](deployment/gcp/kubernetes_configs/sample-apache-web.yml)
 
 to deploy the sample web run the following command:
 ```kubectl apply -f deployment/gcp/kubernetes_configs/sample-apache-web.yml```
