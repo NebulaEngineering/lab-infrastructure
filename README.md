@@ -31,6 +31,16 @@ Requirements
 To create a cluster, run the following command and wait...:
 ''' gcloud container clusters create [CLUSTER_NAME] '''
 
+### Deploy Kubernetes
+To deploy an application into kubernetes you can use Declarative Management using configuration files.
+more: https://kubernetes.io/docs/concepts/overview/object-management-kubectl/declarative-config/
+
+You can find a sample deployment config at [a relative link](deployment/gcp/kubernetes_configs/sample-apache-web.yml)
+
+to deploy the sample web run the following command:
+'''kubectl apply -f deployment/gcp/kubernetes_configs/sample-apache-web.yml'''
+
+
 ### External HTTP access
 Configure Ingress controller to allow external request to reach internal services
 
@@ -40,5 +50,32 @@ run the following command:
 ''' gcloud compute addresses create ip-web-main --ip-version=IPV4 --global '''
 
 #### Ingress controller
+Ingress can provide load balancing, SSL termination and name-based virtual hosting.
+more at: https://kubernetes.io/docs/concepts/services-networking/ingress/ 
+
+Now, this controller will be the entry point, and depending on the URI it is going to route the request to an inner services.
+More advanced topics:
+* Session Persistence: https://github.com/nginxinc/kubernetes-ingress/tree/master/examples/session-persistence
+* WebSocket support: https://github.com/nginxinc/kubernetes-ingress/tree/master/examples/websocket
+* Load Balancing: https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer
+
+Declarative config file sample that redirects http://STATIC_IP/ to the sample frontend application
+'''
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-web-main
+  annotations:
+    # Use a static ip
+    kubernetes.io/ingress.global-static-ip-name: ip-web-main
+spec:
+  backend:
+    serviceName: frontend-sample
+    servicePort: 80
+'''
+
+to deploy Ingress run the following command:
+'''kubectl apply -f CONFIG_FILE.yml'''
+
 
 
