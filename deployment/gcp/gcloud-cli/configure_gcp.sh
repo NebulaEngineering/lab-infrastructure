@@ -7,8 +7,9 @@ gcloud auth activate-service-account $GCP_SERVICE_ACCOUNT_ID --key-file=deployme
 gcloud config set project ne-tpm-prod
 gcloud config set compute/zone  us-central1-a
 
-# Create Kubernetes engine cluster
+# Create Kubernetes engine cluster and link kubectl
 gcloud container clusters create kec-main
+gcloud container clusters get-credentials kec-main
 
 # Deploy ingress 
 # KEYCLOAK, EMI AND API_GATEWAY MUST BE DEPLOYED!!!

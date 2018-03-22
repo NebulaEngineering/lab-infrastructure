@@ -37,7 +37,13 @@ To create a cluster, run the following command and wait...:
 
 ``` gcloud container clusters create [CLUSTER_NAME] ```
 
-### Deploy Kubernetes
+#### Enable kubectl
+In order to link kubectl to the Kubernetes cluster, run the following command:
+
+```gcloud container clusters get-credentials [CLUSTER_NAME]```
+
+
+#### Deploy Kubernetes
 To deploy an application into kubernetes you can use Declarative Management using configuration files.
 more: https://kubernetes.io/docs/concepts/overview/object-management-kubectl/declarative-config/
 
@@ -84,7 +90,7 @@ spec:
 
 to deploy Ingress run the following command:
 
-```kubectl apply -f CONFIG_FILE.yml```
+```kubectl apply -f [CONFIG_FILE]```
 
 
 
