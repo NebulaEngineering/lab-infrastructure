@@ -76,6 +76,7 @@ spec:
 ```
 
 to deploy Ingress run the following command:
+
 ```kubectl apply -f CONFIG_FILE.yml```
 
 
