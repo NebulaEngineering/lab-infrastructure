@@ -53,6 +53,35 @@ to deploy the sample web run the following command:
 
 ```kubectl apply -f deployment/gcp/kubernetes_configs/sample-apache-web.yml```
 
+#### Environment variables & Secrets
+Secrets are intended to hold sensitive information, such as passwords, OAuth tokens, and ssh keys. Putting this information in a secret is safer and more flexible than putting it verbatim in a pod definition or in a docker image.  They are pretty handy as Environmental variables for each Microservices, Eg. Database credentials, Kakfa address, etc.
+
+More info at: [here](https://kubernetes.io/docs/concepts/configuration/secret/) and [here](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)
+
+This docoment exposes only two ways of storing secrets:
+1. using 'kubectl create secret generic' and pass key/val arguments
+   
+   ``` $ kubectl create secret generic [SECRET_NAME] --from-literal=[KEY]=[VAL] --from-literal=[KEY_2]=[VAL_2] ```
+2. using 'kubectl create -f' and pass a YAML file.
+   
+   ``` $ kubectl create -f secret.yaml ```
+
+Here is a configuration file you can use to create a Secret that holds your username and password:
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test-secret
+data:
+  username: bXktYXBw
+  password: Mzk1MjgkdmRnN0pi
+```
+
+Please note that all values are enconded in BASE64
+
+To query your secrets you can run the following command:
+
+``` kubectl get secret [SECRET_NAME] ```
 
 ### External HTTP access
 Configure Ingress controller to allow external request to reach internal services

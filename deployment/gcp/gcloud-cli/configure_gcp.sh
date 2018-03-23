@@ -11,6 +11,11 @@ gcloud config set compute/zone  us-central1-a
 gcloud container clusters create kec-main
 gcloud container clusters get-credentials kec-main
 
+# Deploy secrets
+kubectl create -f deployment/gcp/secrets/secret-keycloak.yml
+
+
 # Deploy ingress 
 # KEYCLOAK, EMI AND API_GATEWAY MUST BE DEPLOYED!!!
 kubectl apply -f deployment/gcp/kubernetes_configs/ingress-web-main.yml
+
