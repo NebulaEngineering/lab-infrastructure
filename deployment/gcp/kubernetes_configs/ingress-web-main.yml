@@ -6,20 +6,20 @@ metadata:
     # Use a static ip
     kubernetes.io/ingress.global-static-ip-name: ip-web-main
     # enable session persistence for one or multiple services
-    # nginx.com/sticky-cookie-services: "serviceName=auth-keycloak srv_id expires=1h path=/auth;"
+    nginx.com/sticky-cookie-services: "serviceName=auth-keycloak srv_id expires=1h path=/auth;"
 spec:
-  # rules:
-  # - host: tpm.nebulae.com.co
-  #   http:
-  #     paths:
-  #     - path: /
-  backend:
-    serviceName: frontend-sample
-    servicePort: 80
-      # - path: /auth
-      #   backend:
-      #     serviceName: auth-keycloak
-      #     servicePort: 8080
+  rules:
+  - host: tpm.nebulae.com.co
+    http:
+      paths:  
+      - path: /
+        backend:
+          serviceName: frontend-sample
+          servicePort: 80
+      - path: /auth
+        backend:
+          serviceName: auth-keycloak
+          servicePort: 8080
       # - path: /emi
       #   backend:
       #     serviceName: frontend-emi

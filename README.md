@@ -56,7 +56,7 @@ to deploy the sample web run the following command:
 #### Environment variables & Secrets
 Secrets are intended to hold sensitive information, such as passwords, OAuth tokens, and ssh keys. Putting this information in a secret is safer and more flexible than putting it verbatim in a pod definition or in a docker image.  They are pretty handy as Environmental variables for each Microservices, Eg. Database credentials, Kakfa address, etc.
 
-More info at: [here](https://kubernetes.io/docs/concepts/configuration/secret/) and [here](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)
+More info [here](https://kubernetes.io/docs/concepts/configuration/secret/) and [here](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)
 
 This docoment exposes only two ways of storing secrets:
 1. using 'kubectl create secret generic' and pass key/val arguments
@@ -82,6 +82,45 @@ Please note that all values are enconded in BASE64
 To query your secrets you can run the following command:
 
 ``` kubectl get secret [SECRET_NAME] ```
+
+The stored secrets can be used now on other Deployments YAML files like this:
+```
+...
+spec:      
+      containers:
+      - image: mysql
+        name: mysql
+        env:                
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: [SECRET_NAME]
+              key: [PROPERTY_KEY]
+...
+```
+
+Secrets can be also accessed through a Volume
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-test-pod
+spec:
+  containers:
+    - name: test-container
+      image: nginx
+      volumeMounts:
+          # name must match the volume name below
+          - name: secret-volume
+            mountPath: /etc/secret-volume
+  # The secret data is exposed to Containers in the Pod through a Volume.
+  volumes:
+    - name: secret-volume
+      secret:
+        secretName: [SECRET_NAME]
+
+``` 
 
 ### External HTTP access
 Configure Ingress controller to allow external request to reach internal services
@@ -120,6 +159,4 @@ spec:
 to deploy Ingress run the following command:
 
 ```kubectl apply -f [CONFIG_FILE]```
-
-
 
