@@ -12,18 +12,18 @@ spec:
   - host: tpm.nebulae.com.co
     http:
       paths:  
-      - path: /
-        backend:
-          serviceName: frontend-sample
-          servicePort: 80
-      - path: /auth
+      - path: /*
         backend:
           serviceName: auth-keycloak
-          servicePort: 8080
-      # - path: /emi
-      #   backend:
-      #     serviceName: frontend-emi
-      #     servicePort: 8080     
+          servicePort: 80
+      - path: /sample/*
+        backend:
+          serviceName: frontend-sample
+          servicePort: 80      
+      - path: /emi/*
+        backend:
+          serviceName: frontend-emi
+          servicePort: 80     
       # - path: /api/graphql
       #   backend:
       #     serviceName: api-apollo
